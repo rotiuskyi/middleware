@@ -32,25 +32,25 @@ func Compose(middlewareArr ...Middleware) http.HandlerFunc {
 
 // Post method filter
 func Post(hf http.HandlerFunc) Middleware {
-	return methodSwitch("POST", hf)
+	return filterMethod("POST", hf)
 }
 
 // Get method filter
 func Get(hf http.HandlerFunc) Middleware {
-	return methodSwitch("GET", hf)
+	return filterMethod("GET", hf)
 }
 
 // Put method filter
 func Put(hf http.HandlerFunc) Middleware {
-	return methodSwitch("PUT", hf)
+	return filterMethod("PUT", hf)
 }
 
 // Delete method filter
 func Delete(hf http.HandlerFunc) Middleware {
-	return methodSwitch("DELETE", hf)
+	return filterMethod("DELETE", hf)
 }
 
-func methodSwitch(method string, hf http.HandlerFunc) Middleware {
+func filterMethod(method string, hf http.HandlerFunc) Middleware {
 	return func(next http.HandlerFunc) http.HandlerFunc {
 		return func(rw http.ResponseWriter, req *http.Request) {
 			if strings.ToUpper(req.Method) == method {
